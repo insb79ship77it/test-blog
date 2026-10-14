@@ -1,0 +1,20 @@
+---
+import { getCollection } from 'astro:content';
+import GuideLayout from '../../layouts/GuideLayout.astro';
+
+// 모든 정적 경로 생성
+export async function getStaticPaths() {
+  const guideEntries = await getCollection('guide');
+  return guideEntries.map(entry => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<GuideLayout frontmatter={entry.data}>
+  <Content />
+</GuideLayout>
