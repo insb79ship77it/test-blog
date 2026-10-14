@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="사이트 소개 - 온라인 HWP 뷰어">
+  <article class="page-container">
+    <h1>사이트 소개</h1>
+    <p class="subtitle">별도 프로그램 설치 없이 웹 브라우저에서 안전하고 빠르게 한글(HWP/HWPX) 문서를 확인하세요.</p>
+    
+    <hr />
+
+    <h2>서비스 특징</h2>
+    <ul>
+      <li><strong>서버 저장 없는 안전함:</strong> 문서 확인 과정에서 파일이 외부 서버로 전송되거나 저장되지 않으므로 개인정보 및 보안 문서도 안심하고 열람할 수 있습니다.</li>
+      <li><strong>멀티 플랫폼 지원:</strong> Windows, Mac(macOS), iOS(아이폰/아이패드), Android 디바이스를 가리지 않고 웹 브라우저만 있으면 작동합니다.</li>
+      <li><strong>빠른 접근성:</strong> 한글 뷰어 프로그램을 다운로드하고 설치하는 번거로운 과정 없이 파일 드래그 한 번으로 즉시 열람이 가능합니다.</li>
+    </ul>
+
+    <h2>제공 기능</h2>
+    <p>본 서비스는 HWP 및 HWPX 문서 뷰어 기능 외에도 한글 문서 관련 다양한 활용 가이드와 유용한 웹 도구 정보들을 제공하고 있습니다.</p>
+  </article>
+</BaseLayout>
+
+<style>
+  .page-container {
+    background: #ffffff;
+    padding: 36px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    margin-top: 20px;
+  }
+  .page-container h1 { font-size: 1.8rem; margin-bottom: 8px; }
+  .subtitle { color: #6b7280; margin-bottom: 20px; }
+  .page-container h2 { font-size: 1.3rem; margin-top: 24px; margin-bottom: 12px; }
+  .page-container ul { margin-left: 20px; margin-bottom: 16px; line-height: 1.7; }
+  .page-container li { margin-bottom: 8px; }
+</style>
