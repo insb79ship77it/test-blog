@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://test-blog-3lh.pages.dev/sitemap.xml
