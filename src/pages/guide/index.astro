@@ -2,19 +2,26 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
-const posts = await getCollection('guide');
+const allGuides = await getCollection('guide');
 ---
 
-<BaseLayout title="가이드 전체 보기">
-  <h1>가이드 및 매뉴얼</h1>
-  <ul>
-    {posts.map(post => (
-      <li>
-        <a href={`/guide/${post.slug}/`}>
-          <h3>{post.data.title}</h3>
-          <p>{post.data.description}</p>
-        </a>
-      </li>
-    ))}
-  </ul>
+<BaseLayout title="가이드 및 블로그 목록">
+  <div class="tool-header">
+    <h1>가이드 & 블로그</h1>
+    <p>한글(HWP) 파일 뷰어 사용법 및 다양한 가이드를 확인하세요.</p>
+  </div>
+
+  <section class="guide-section">
+    <h2>전체 글 목록</h2>
+    <ul class="guide-list">
+      {allGuides.map(post => (
+        <li>
+          <a href={`/guide/${post.slug}/`}>
+            <strong>{post.data.title}</strong>
+            {post.data.description && <p style="font-size: 0.9rem; color: #6b7280; margin-top: 4px; ">{post.data.description}</p>}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
 </BaseLayout>
