@@ -1,1 +1,20 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
 
+const posts = await getCollection('guide');
+---
+
+<BaseLayout title="가이드 전체 보기">
+  <h1>가이드 및 매뉴얼</h1>
+  <ul>
+    {posts.map(post => (
+      <li>
+        <a href={`/guide/${post.slug}/`}>
+          <h3>{post.data.title}</h3>
+          <p>{post.data.description}</p>
+        </a>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>
