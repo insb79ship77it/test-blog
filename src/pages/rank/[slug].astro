@@ -14,11 +14,10 @@ const { entry } = Astro.props;
 const { Content } = await entry.render();
 ---
 
-<BaseLayout title={entry.data.title}>
+<BaseLayout title={entry.data.title} description={entry.data.description}>
   <article>
     <div class="article-header">
       {entry.data.category && <span class="category-badge">{entry.data.category}</span>}
-      <h1>{entry.data.title}</h1>
       {entry.data.description && <p class="desc">{entry.data.description}</p>}
     </div>
     <hr />
@@ -28,8 +27,7 @@ const { Content } = await entry.render();
 
 <style>
   .article-header { margin-bottom: 20px; }
-  .article-header h1 { font-size: 1.8rem; margin-top: 10px; margin-bottom: 8px; }
-  .desc { color: #6b7280; font-size: 1rem; }
+  .desc { color: #4b5563; font-size: 1.05rem; margin-top: 12px; line-height: 1.6; }
   .category-badge {
     background-color: #eff6ff;
     color: #2563eb;
@@ -38,5 +36,6 @@ const { Content } = await entry.render();
     padding: 4px 10px;
     border-radius: 20px;
     border: 1px solid #bfdbfe;
+    display: inline-block;
   }
 </style>
