@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="개인정보처리방침 - 온라인 HWP 뷰어">
+  <article class="page-container">
+    <h1>개인정보처리방침</h1>
+    <p class="subtitle">시행일자: 2026년 10월 14일</p>
+
+    <hr />
+
+    <h2>1. 개인정보의 수집 및 이용 목적</h2>
+    <p>본 사이트는 회원가입이나 별도의 개인정보 입력 없이 모든 뷰어 및 정보 서비스를 자유롭게 이용할 수 있습니다. 이용자가 업로드하는 한글(HWP/HWPX) 문서는 웹 브라우저 로컬 단에서 처리되며, 서버로 전송되거나 저장되지 않습니다.</p>
+
+    <h2>2. 쿠키(Cookie) 및 방문 분석</h2>
+    <p>서비스 품질 향상 및 통계 분석을 위해 최소한의 익명 방문 데이터(Google Analytics 또는 Cloudflare Web Analytics 등)가 수집될 수 있습니다. 이용자는 브라우저 설정을 통해 쿠키 수집을 거부할 수 있습니다.</p>
+
+    <h2>3. 제3자 서비스 및 광고</h2>
+    <p>본 사이트는 운영비 충당을 위해 제3자 광고 네트워크(예: Google AdSense)를 이용할 수 있습니다. 광고 사업자는 이용자의 관심사에 맞는 광고를 제공하기 위해 웹 사이트 방문 정보를 활용할 수 있습니다.</p>
+
+    <h2>4. 개인정보 보호책임자 및 문의</h2>
+    <p>개인정보 처리와 관련된 문의사항은 [문의] 페이지를 통해 연락 주시면 신속하게 답변해 드리겠습니다.</p>
+  </article>
+</BaseLayout>
+
+<style>
+  .page-container {
+    background: #ffffff;
+    padding: 36px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    margin-top: 20px;
+  }
+  .page-container h1 { font-size: 1.8rem; margin-bottom: 8px; }
+  .subtitle { color: #6b7280; margin-bottom: 20px; }
+  .page-container h2 { font-size: 1.2rem; margin-top: 24px; margin-bottom: 8px; }
+  .page-container p { color: #374151; line-height: 1.7; margin-bottom: 12px; }
+</style>
