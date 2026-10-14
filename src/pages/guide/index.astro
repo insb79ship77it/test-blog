@@ -2,11 +2,11 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
-// guide 콘텐츠 컬렉션 불러오기
-const allGuides = await getCollection('guide');
+// rank 콘텐츠 컬렉션 불러오기
+const allRanks = await getCollection('rank');
 
 // 최신순 정렬
-const guides = allGuides.sort(
+const ranks = allRanks.sort(
   (a, b) => new Date(b.data.pubDate || 0).getTime() - new Date(a.data.pubDate || 0).getTime()
 );
 
@@ -22,18 +22,18 @@ const formatDate = (dateStr) => {
 ---
 
 <BaseLayout 
-  title="가이드 & 팁 목록" 
-  description="한글 뷰어 활용법 및 다양한 IT/생활 가이드 글 모음입니다."
+  title="인기 순위 TOP 모음" 
+  description="다양한 분야의 인기 순위 정보와 분석 데이터를 확인해 보세요."
 >
   <div class="page-header">
-    <h1>📚 가이드 & 팁</h1>
-    <p>유용한 팁과 가이드 문서를 확인해 보세요.</p>
+    <h1>🏆 인기 순위 TOP</h1>
+    <p>분야별 인기 순위 및 리스트를 확인해 보세요.</p>
   </div>
 
   <ul class="card-list">
-    {guides.map(post => (
+    {ranks.map(post => (
       <li class="card-item">
-        <a href={`/guide/${post.slug}/`} class="card-link">
+        <a href={`/rank/${post.slug}/`} class="card-link">
           <div class="card-meta">
             {post.data.category && <span class="badge">{post.data.category}</span>}
             {post.data.pubDate && <time>{formatDate(post.data.pubDate)}</time>}
