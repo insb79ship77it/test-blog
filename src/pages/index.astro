@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+// 전체 가이드 글 목록 가져오기
+const allGuides = await getCollection('guide');
+---
+
+<BaseLayout title="온라인 파일 변환기">
+  <section class="tool-section">
+    <h1>설치 없이 파일 열기</h1>
+    <div id="drop-zone" class="drop-zone">
+      여기에 파일을 드래그 & 드롭하세요
+    </div>
+  </section>
+
+  <!-- 하단 SEO 가이드 블로그 영역 -->
+  <section class="guide-section">
+    <h2>사용 가이드</h2>
+    <ul>
+      {allGuides.map(post => (
+        <li>
+          <a href={`/guide/${post.slug}/`}>{post.data.title}</a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</BaseLayout>
+
+<script>
+  // 클라이언트 측 JS 도구 로직
+  const dropZone = document.getElementById('drop-zone');
+  dropZone?.addEventListener('click', () => {
+    alert('파일 선택 기능 실행');
+  });
+</script>
+
+<style>
+  .drop-zone {
+    border: 2px dashed #ccc;
+    padding: 3rem;
+    text-align: center;
+    cursor: pointer;
+  }
+</style>
