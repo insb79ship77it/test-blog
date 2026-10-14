@@ -2,30 +2,147 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
+// 가이드 및 순위 콘텐츠 불러오기
 const allGuides = await getCollection('guide');
+const allRanks = await getCollection('rank');
+
+// 각각 최신순으로 정렬 후 상위 3개만 추출
+const recentGuides = allGuides
+  .sort((a, b) => new Date(b.data.pubDate || 0).getTime() - new Date(a.data.pubDate || 0).getTime())
+  .slice(0, 3);
+
+const recentRanks = allRanks
+  .sort((a, b) => new Date(b.data.pubDate || 0).getTime() - new Date(a.data.pubDate || 0).getTime())
+  .slice(0, 3);
+
+// 날짜 포맷 함수
+const formatDate = (dateStr) => {
+  if (!dateStr) return '';
+  const date = new Date(dateStr);
+  return date.toLocaleDateString('ko-KR', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }).replace(/\. /g, '.').replace(/\.$/, '');
+};
 ---
 
-<BaseLayout title="한글파일, 설치 없이 온라인에서 연다">
+<BaseLayout title="온라인 HWP 뷰어 & 콘텐츠 플랫폼">
+  <!-- 메인 헤더 & 업로드 뷰어 영역 -->
   <div class="tool-header">
     <h1>한글파일, 설치 없이 온라인에서 연다</h1>
     <p>맥북·아이폰·안드로이드에서 hwp 파일이 그대로 열립니다.</p>
   </div>
 
-  <!-- 드롭존 업로드 박스 -->
   <div id="drop-zone" class="drop-zone">
     <div class="drop-zone-title">여기에 한글 파일을 끌어다 놓으세요</div>
     <div class="drop-zone-sub">또는 눌러서 선택 · .hwp / .hwpx · 용량 제한 없음</div>
   </div>
 
-  <!-- 가이드 블로그 링크 목록 -->
-  <section class="guide-section">
-    <h2>가이드</h2>
-    <ul class="guide-list">
-      {allGuides.map(post => (
-        <li>
-          <a href={`/guide/${post.slug}/`}>{post.data.title}</a>
-        </li>
-      ))}
-    </ul>
-  </section>
+  <!-- 콘텐츠 섹션 그리드 (순위 / 가이드) -->
+  <div class="content-grid">
+    <!-- 최신 순위 섹션 -->
+    <section class="card-section">
+      <div class="section-header">
+        <h2>🔥 인기 순위</h2>
+        <a href="/rank/" class="more-link">전체보기 &rarr;</a>
+      </div>
+      <ul class="card-list">
+        {recentRanks.map(post => (
+          <li class="card-item">
+            <a href={`/rank/${post.slug}/`} class="card-link">
+              <div class="card-meta">
+                {post.data.category && <span class="badge">{post.data.category}</span>}
+                {post.data.pubDate && <time>{formatDate(post.data.pubDate)}</time>}
+              </div>
+              <h3 class="card-title">{post.data.title}</h3>
+              {post.data.description && <p class="card-desc">{post.data.description}</p>}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- 최신 가이드 섹션 -->
+    <section class="card-section">
+      <div class="section-header">
+        <h2>📚 가이드 & 팁</h2>
+        <a href="/guide/" class="more-link">전체보기 &rarr;</a>
+      </div>
+      <ul class="card-list">
+        {recentGuides.map(post => (
+          <li class="card-item">
+            <a href={`/guide/${post.slug}/`} class="card-link">
+              <div class="card-meta">
+                {post.data.category && <span class="badge">{post.data.category}</span>}
+                {post.data.pubDate && <time>{formatDate(post.data.pubDate)}</time>}
+              </div>
+              <h3 class="card-title">{post.data.title}</h3>
+              {post.data.description && <p class="card-desc">{post.data.description}</p>}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </div>
 </BaseLayout>
+
+<style>
+  .content-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    margin-top: 48px;
+  }
+
+  .card-section {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 24px;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #111827;
+  }
+
+  .section-header h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0;
+  }
+
+  .more-link {
+    font-size: 0.88rem;
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .more-link:hover {
+    text-decoration: underline;
+  }
+
+  .card-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .card-item {
+    border: 1px solid #f3f4f6;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+  }
+
+  .card-item:hover {
+    border-color
