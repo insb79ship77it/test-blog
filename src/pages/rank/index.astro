@@ -1,0 +1,109 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+// src/content/rank/ 폴더 안의 마크다운 파일 수집 및 정렬
+const allRanks = await getCollection('rank');
+allRanks.sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime());
+
+const formatDate = (dateStr) => {
+  if (!dateStr) return '';
+  const date = new Date(dateStr);
+  return date.toLocaleDateString('ko-KR', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }).replace(/\. /g, '.').replace(/\.$/, '');
+};
+---
+
+<BaseLayout title="아이돌 & 검색엔진 인기 순위">
+  <div class="tool-header">
+    <h1>인기 순위 모음</h1>
+    <p>최신 아이돌 브랜드 평판 및 검색엔진 점유율 순위를 확인하세요.</p>
+  </div>
+
+  <section class="guide-section">
+    <h2>전체 순위 목록 ({allRanks.length})</h2>
+    <ul class="guide-card-list">
+      {allRanks.map(post => (
+        <li class="guide-card-item">
+          <a href={`/rank/${post.slug}/`} class="guide-card-link">
+            <div class="card-meta-top">
+              {post.data.category && (
+                <span class="category-badge">{post.data.category}</span>
+              )}
+              {post.data.pubDate && (
+                <time class="pub-date">{formatDate(post.data.pubDate)}</time>
+              )}
+            </div>
+            
+            <h3 class="card-title">{post.data.title}</h3>
+            
+            {post.data.description && (
+              <p class="card-desc">{post.data.description}</p>
+            )}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .guide-card-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 0;
+    margin-top: 20px;
+  }
+  .guide-card-item {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+  }
+  .guide-card-item:hover {
+    border-color: #2563eb;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+    transform: translateY(-2px);
+  }
+  .guide-card-link {
+    display: block;
+    padding: 20px;
+    text-decoration: none;
+    color: inherit;
+  }
+  .card-meta-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .category-badge {
+    background-color: #eff6ff;
+    color: #2563eb;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid #bfdbfe;
+  }
+  .pub-date {
+    font-size: 0.85rem;
+    color: #9ca3af;
+  }
+  .card-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 6px;
+  }
+  .card-desc {
+    font-size: 0.92rem;
+    color: #4b5563;
+    margin: 0;
+  }
+</style>
