@@ -273,3 +273,72 @@ main td a:hover {
   background-color: #2563eb;
   color: #ffffff;
 }
+
+/* ==========================================
+   details 아코디언 스타일링
+   ========================================== */
+
+main details {
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  margin: 14px 0;
+  padding: 14px 18px;
+  transition: all 0.2s ease-in-out;
+}
+
+/* 열렸을 때 (Open 상태) 포인트 테두리 & 배경 */
+main details[open] {
+  background-color: #ffffff;
+  border-color: #2563eb;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.06);
+}
+
+/* 질문 제목 부분 (summary) */
+main summary {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: #1f2937;
+  cursor: pointer;
+  list-style: none; /* 브라우저 기본 투박한 삼각 화살표 제거 */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+}
+
+/* 기본 화살표 숨기기 (크로스 브라우징) */
+main summary::-webkit-details-marker {
+  display: none;
+}
+
+/* 커스텀 우측 커럿(> 모양) 아이콘 추가 */
+main summary::after {
+  content: "❯";
+  font-size: 0.8rem;
+  color: #9ca3af;
+  transition: transform 0.2s ease;
+  margin-left: 10px;
+}
+
+/* 열렸을 때 화살표 회전 (아래 방향) */
+main details[open] summary::after {
+  transform: rotate(90deg);
+  color: #2563eb;
+}
+
+/* 열렸을 때 답변 영역 간격 설정 */
+main details[open] summary {
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+/* 답변 내용 본문 패딩 */
+main details blockquote,
+main details p {
+  margin: 0;
+  color: #4b5563;
+  font-size: 0.93rem;
+  line-height: 1.6;
+}
