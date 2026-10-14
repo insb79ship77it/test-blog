@@ -1,6 +1,19 @@
 ---
 import '../styles/global.css';
-const { title = "온라인 HWP 뷰어" } = Astro.props;
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+const { 
+  title = "온라인 HWP 뷰어 & 순위 가이드", 
+  description = "별도 프로그램 설치 없이 웹 브라우저에서 안전하고 빠르게 한글(HWP/HWPX) 문서를 확인하세요. 최신 인기 순위 및 가이드 제공.",
+  image = "/favicon.svg" 
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://test-blog-3lh.pages.dev");
 ---
 
 <!DOCTYPE html>
@@ -8,7 +21,32 @@ const { title = "온라인 HWP 뷰어" } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- 기본 메타 태그 (SEO) -->
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    <meta name="robots" content="index, follow" />
+
+    <!-- 파비콘 (Favicon) 설정 -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- .ico 파일이나 .png를 쓰신다면 아래 주석을 참고하여 맞춰주세요 -->
+    <!-- <link rel="shortcut icon" href="/favicon.ico" /> -->
+
+    <!-- Open Graph (카카오톡, 네이버 블로그, 페이스북 공유용) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, canonicalURL)} />
+    <meta property="og:site_name" content="온라인 HWP 뷰어" />
+    <meta property="og:locale" content="ko_KR" />
+
+    <!-- 트위터 카드 (Twitter Card) -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(image, canonicalURL)} />
   </head>
   <body>
     <div class="container">
