@@ -2,22 +2,25 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
-// 전체 가이드 글 목록 가져오기
 const allGuides = await getCollection('guide');
 ---
 
-<BaseLayout title="온라인 파일 변환기">
-  <section class="tool-section">
-    <h1>설치 없이 파일 열기</h1>
-    <div id="drop-zone" class="drop-zone">
-      여기에 파일을 드래그 & 드롭하세요
-    </div>
-  </section>
+<BaseLayout title="한글파일, 설치 없이 온라인에서 연다">
+  <div class="tool-header">
+    <h1>한글파일, 설치 없이 온라인에서 연다</h1>
+    <p>맥북·아이폰·안드로이드에서 hwp 파일이 그대로 열립니다.</p>
+  </div>
 
-  <!-- 하단 SEO 가이드 블로그 영역 -->
+  <!-- 드롭존 업로드 박스 -->
+  <div id="drop-zone" class="drop-zone">
+    <div class="drop-zone-title">여기에 한글 파일을 끌어다 놓으세요</div>
+    <div class="drop-zone-sub">또는 눌러서 선택 · .hwp / .hwpx · 용량 제한 없음</div>
+  </div>
+
+  <!-- 가이드 블로그 링크 목록 -->
   <section class="guide-section">
-    <h2>사용 가이드</h2>
-    <ul>
+    <h2>가이드</h2>
+    <ul class="guide-list">
       {allGuides.map(post => (
         <li>
           <a href={`/guide/${post.slug}/`}>{post.data.title}</a>
@@ -26,20 +29,3 @@ const allGuides = await getCollection('guide');
     </ul>
   </section>
 </BaseLayout>
-
-<script>
-  // 클라이언트 측 JS 도구 로직
-  const dropZone = document.getElementById('drop-zone');
-  dropZone?.addEventListener('click', () => {
-    alert('파일 선택 기능 실행');
-  });
-</script>
-
-<style>
-  .drop-zone {
-    border: 2px dashed #ccc;
-    padding: 3rem;
-    text-align: center;
-    cursor: pointer;
-  }
-</style>
