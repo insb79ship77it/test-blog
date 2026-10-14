@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="문의하기 - 온라인 HWP 뷰어">
+  <article class="page-container">
+    <h1>문의하기</h1>
+    <p class="subtitle">서비스 이용 중 궁금한 점이나 오류 제보, 제휴 문의 사항을 남겨주세요.</p>
+
+    <hr />
+
+    <div class="contact-box">
+      <h2>이메일 문의</h2>
+      <p>문의사항이나 피드백은 아래 이메일 주소로 전달해 주시면 확인 후 답변드리겠습니다.</p>
+      <a href="mailto:contact@example.com" class="email-link">contact@example.com</a>
+    </div>
+
+    <div class="faq-notice">
+      <h3>자주 묻는 질문</h3>
+      <ul>
+        <li><strong>Q. 업로드한 파일이 외부로 유출될 가능성이 있나요?</strong><br />A. 아니오. 본 서비스는 파일을 서버로 전송하지 않고 브라우저 내에서 직접 변환하여 출력하므로 안전합니다.</li>
+        <li><strong>Q. 모바일에서도 작동하나요?</strong><br />A. 네, 아이폰과 안드로이드 모바일 브라우저에서도 원활하게 이용하실 수 있습니다.</li>
+      </ul>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .page-container {
+    background: #ffffff;
+    padding: 36px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    margin-top: 20px;
+  }
+  .page-container h1 { font-size: 1.8rem; margin-bottom: 8px; }
+  .subtitle { color: #6b7280; margin-bottom: 20px; }
+  .contact-box {
+    background: #f9fafb;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    margin: 20px 0;
+  }
+  .contact-box h2 { font-size: 1.15rem; margin-bottom: 8px; }
+  .email-link {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #2563eb;
+    text-decoration: none;
+  }
+  .email-link:hover { text-decoration: underline; }
+  .faq-notice { margin-top: 30px; }
+  .faq-notice h3 { font-size: 1.1rem; margin-bottom: 12px; }
+  .faq-notice ul { list-style: none; padding: 0; }
+  .faq-notice li { margin-bottom: 16px; color: #4b5563; line-height: 1.6; }
+</style>
