@@ -1,3 +1,10 @@
+---
+title: "2026년 최신 K-POP 아이돌 인기 순위 및 브랜드 평판"
+description: "This document analyzes the popularity rankings and characteristics of K-POP idols in 2026, divided into group and individual categories. It includes rankings based on various metrics such as music sales, global fandom size, media exposure, and brand reputation."
+category: "아이돌 순위"
+pubDate: "2026-10-14"
+---
+
 # 2026년 K-POP 아이돌 인기 순위 및 특징 분석
 
 아이돌 인기 순위는 음원/음반 성적, 글로벌 팬덤 규모, 미디어 노출, 브랜드 평판 지수 등 분석 기준에 따라 차이가 있습니다. 2026년 최신 흐름을 종합하여 **그룹**과 **개인** 부문으로 나누어 주요 순위와 특징을 분석해 드립니다.
