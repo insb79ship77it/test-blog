@@ -9,7 +9,7 @@ pubDate: "2026-10-15"
 
 ---
 
-<Image src="image_agent_tag_4193169904962101883" alt="고급 메모지와 만년필" caption="클래식한 멋과 그립감을 자랑하는 고급 만년필" />
+<Image src="[image_agent_tag_4193169904962101883](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgqp4WACZYBtHck5Vqo30Tro_FKkwqYUfeMJuiwIsSz2oX7VLrVs_rymDHq3UslMsQeRQlVA0PBTD_fdG4S76guUc0rRq8u4Vd3WcI4fLZvdnDkzR9XtURDCHOzSu-G38-220gWXPnGr0fj/s1600/sheafferchristmas.jpg)" alt="고급 메모지와 만년필" caption="클래식한 멋과 그립감을 자랑하는 고급 만년필" />
 
 ## 1. 종합 선호도 평가 및 명세
 
