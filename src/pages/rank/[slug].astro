@@ -1,0 +1,42 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const rankEntries = await getCollection('rank');
+  return rankEntries.map(entry => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<BaseLayout title={entry.data.title}>
+  <article>
+    <div class="article-header">
+      {entry.data.category && <span class="category-badge">{entry.data.category}</span>}
+      <h1>{entry.data.title}</h1>
+      {entry.data.description && <p class="desc">{entry.data.description}</p>}
+    </div>
+    <hr />
+    <Content />
+  </article>
+</BaseLayout>
+
+<style>
+  .article-header { margin-bottom: 20px; }
+  .article-header h1 { font-size: 1.8rem; margin-top: 10px; margin-bottom: 8px; }
+  .desc { color: #6b7280; font-size: 1rem; }
+  .category-badge {
+    background-color: #eff6ff;
+    color: #2563eb;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid #bfdbfe;
+  }
+</style>
