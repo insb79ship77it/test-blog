@@ -2,147 +2,223 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
-// 가이드 및 순위 콘텐츠 불러오기
-const allGuides = await getCollection('guide');
 const allRanks = await getCollection('rank');
+const ranks = allRanks.sort((a, b) => new Date(b.data.pubDate || 0).getTime() - new Date(a.data.pubDate || 0).getTime()).slice(0, 3);
 
-// 각각 최신순으로 정렬 후 상위 3개만 추출
-const recentGuides = allGuides
-  .sort((a, b) => new Date(b.data.pubDate || 0).getTime() - new Date(a.data.pubDate || 0).getTime())
-  .slice(0, 3);
+const allGuides = await getCollection('guide');
+const guides = allGuides.sort((a, b) => new Date(b.data.pubDate || 0).getTime() - new Date(a.data.pubDate || 0).getTime()).slice(0, 3);
 
-const recentRanks = allRanks
-  .sort((a, b) => new Date(b.data.pubDate || 0).getTime() - new Date(a.data.pubDate || 0).getTime())
-  .slice(0, 3);
-
-// 날짜 포맷 함수
 const formatDate = (dateStr) => {
   if (!dateStr) return '';
   const date = new Date(dateStr);
-  return date.toLocaleDateString('ko-KR', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit'
-  }).replace(/\. /g, '.').replace(/\.$/, '');
+  return date.toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\. /g, '.').replace(/\.$/, '');
 };
 ---
 
-<BaseLayout title="온라인 HWP 뷰어 & 콘텐츠 플랫폼">
-  <!-- 메인 헤더 & 업로드 뷰어 영역 -->
-  <div class="tool-header">
-    <h1>한글파일, 설치 없이 온라인에서 연다</h1>
-    <p>맥북·아이폰·안드로이드에서 hwp 파일이 그대로 열립니다.</p>
-  </div>
+<BaseLayout title="HWP 뷰어 & 인기 순위 가이드" description="웹 브라우저에서 한글 문서를 열람하고 인기 순위 및 가이드 정보를 빠르게 확인하세요.">
+  <section class="hero-section">
+    <h1>웹 브라우저 HWP 뷰어</h1>
+    <p>설치 없이 브라우저에서 한글(HWP, HWPX) 문서를 바로 확인하세요.</p>
+  </section>
 
-  <div id="drop-zone" class="drop-zone">
-    <div class="drop-zone-title">여기에 한글 파일을 끌어다 놓으세요</div>
-    <div class="drop-zone-sub">또는 눌러서 선택 · .hwp / .hwpx · 용량 제한 없음</div>
-  </div>
+  <!-- 🔥 인기 순위 섹션 -->
+  <section class="section-block">
+    <div class="section-header">
+      <h2>🔥 인기 순위</h2>
+      <a href="/rank/" class="more-link">전체보기 <span class="arrow">→</span></a>
+    </div>
 
-  <!-- 콘텐츠 섹션 그리드 (순위 / 가이드) -->
-  <div class="content-grid">
-    <!-- 최신 순위 섹션 -->
-    <section class="card-section">
-      <div class="section-header">
-        <h2>🔥 인기 순위</h2>
-        <a href="/rank/" class="more-link">전체보기 &rarr;</a>
-      </div>
-      <ul class="card-list">
-        {recentRanks.map(post => (
-          <li class="card-item">
-            <a href={`/rank/${post.slug}/`} class="card-link">
-              <div class="card-meta">
-                {post.data.category && <span class="badge">{post.data.category}</span>}
-                {post.data.pubDate && <time>{formatDate(post.data.pubDate)}</time>}
-              </div>
-              <h3 class="card-title">{post.data.title}</h3>
-              {post.data.description && <p class="card-desc">{post.data.description}</p>}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </section>
+    <ul class="clean-list">
+      {ranks.map(post => (
+        <li class="clean-item">
+          <a href={`/rank/${post.slug}/`} class="clean-link">
+            <div class="item-meta">
+              {post.data.category && <span class="badge">{post.data.category}</span>}
+              {post.data.pubDate && <time>{formatDate(post.data.pubDate)}</time>}
+            </div>
+            <h3 class="item-title">{post.data.title}</h3>
+            {post.data.description && <p class="item-desc">{post.data.description}</p>}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
 
-    <!-- 최신 가이드 섹션 -->
-    <section class="card-section">
-      <div class="section-header">
-        <h2>📚 가이드 & 팁</h2>
-        <a href="/guide/" class="more-link">전체보기 &rarr;</a>
-      </div>
-      <ul class="card-list">
-        {recentGuides.map(post => (
-          <li class="card-item">
-            <a href={`/guide/${post.slug}/`} class="card-link">
-              <div class="card-meta">
-                {post.data.category && <span class="badge">{post.data.category}</span>}
-                {post.data.pubDate && <time>{formatDate(post.data.pubDate)}</time>}
-              </div>
-              <h3 class="card-title">{post.data.title}</h3>
-              {post.data.description && <p class="card-desc">{post.data.description}</p>}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </section>
-  </div>
+  <!-- 📚 가이드 & 팁 섹션 -->
+  <section class="section-block">
+    <div class="section-header">
+      <h2>📚 가이드 & 팁</h2>
+      <a href="/guide/" class="more-link">전체보기 <span class="arrow">→</span></a>
+    </div>
+
+    <ul class="clean-list">
+      {guides.map(post => (
+        <li class="clean-item">
+          <a href={`/guide/${post.slug}/`} class="clean-link">
+            <div class="item-meta">
+              {post.data.category && <span class="badge badge-guide">{post.data.category}</span>}
+              {post.data.pubDate && <time>{formatDate(post.data.pubDate)}</time>}
+            </div>
+            <h3 class="item-title">{post.data.title}</h3>
+            {post.data.description && <p class="item-desc">{post.data.description}</p>}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
 </BaseLayout>
 
 <style>
-  .content-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-    margin-top: 48px;
+  .hero-section {
+    text-align: center;
+    padding: 32px 16px;
+    margin-bottom: 32px;
+    background-color: #f8fafc;
+    border-radius: 16px;
   }
 
-  .card-section {
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 24px;
+  .hero-section h1 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 8px;
+  }
+
+  .hero-section p {
+    color: #475569;
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  .section-block {
+    margin-bottom: 40px;
   }
 
   .section-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #111827;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #0f172a;
+    margin-bottom: 8px;
   }
 
   .section-header h2 {
-    font-size: 1.25rem;
+    font-size: 1.35rem;
     font-weight: 700;
-    color: #111827;
+    color: #0f172a;
     margin: 0;
   }
 
+  /* 세련된 전체보기 버튼 링크 */
   .more-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
     font-size: 0.88rem;
+    font-weight: 600;
     color: #2563eb;
     text-decoration: none;
-    font-weight: 600;
-  }
-
-  .more-link:hover {
-    text-decoration: underline;
-  }
-
-  .card-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .card-item {
-    border: 1px solid #f3f4f6;
-    border-radius: 8px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background-color: #eff6ff;
     transition: all 0.2s ease;
   }
 
-  .card-item:hover {
-    border-color
+  .more-link:hover {
+    background-color: #dbeafe;
+    transform: translateX(2px);
+  }
+
+  .more-link .arrow {
+    transition: transform 0.2s ease;
+  }
+
+  .more-link:hover .arrow {
+    transform: translateX(3px);
+  }
+
+  /* 목록 이중 테두리 완전 제거 스타일 */
+  .clean-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .clean-item {
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .clean-item:last-child {
+    border-bottom: none;
+  }
+
+  .clean-link {
+    display: block;
+    padding: 16px 8px;
+    text-decoration: none;
+    color: inherit;
+    border-radius: 8px;
+    transition: background-color 0.15s ease;
+  }
+
+  .clean-link:hover {
+    background-color: #f8fafc;
+  }
+
+  .item-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+
+  .badge {
+    background-color: #eff6ff;
+    color: #2563eb;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 6px;
+  }
+
+  .badge-guide {
+    background-color: #f0fdf4;
+    color: #16a34a;
+  }
+
+  .item-meta time {
+    font-size: 0.8rem;
+    color: #94a3b8;
+  }
+
+  .item-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0 0 6px 0;
+    line-height: 1.4;
+  }
+
+  .item-desc {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 768px) {
+    .clean-link {
+      padding: 14px 4px;
+    }
+    
+    .hero-section {
+      padding: 24px 12px;
+      border-radius: 12px;
+    }
+
+    .hero-section h1 {
+      font-size: 1.5rem;
+    }
+  }
+</style>
