@@ -23,19 +23,14 @@ const siteTitle = title.includes("HWP") ? title : `${title} | HWP 뷰어`;
     <meta name="description" content={description} />
     <link rel="canonical" href={Astro.url.href} />
 
-    <!-- Open Graph (카카오톡, 페이스북, 크롤러 수집용) -->
+    <!-- Open Graph (카카오톡, 검색엔진 수집용) -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={Astro.url.href} />
     <meta property="og:title" content={siteTitle} />
     <meta property="og:description" content={description} />
 
-    <!-- 검색엔진 소유 확인 메타 태그 (필요시 content 값 교체) -->
-    <!-- <meta name="naver-site-verification" content="네이버_검색_소유확인_코드" /> -->
-    <!-- <meta name="google-site-verification" content="구글_검색_소유확인_코드" /> -->
-
-    <!-- 전역 스타일 및 Pretendard 폰트 -->
+    <!-- 전역 폰트 설정 -->
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-    <link rel="stylesheet" href="/styles/global.css" />
   </head>
   <body>
     <!-- 상단 네비게이션 헤더 -->
@@ -63,7 +58,7 @@ const siteTitle = title.includes("HWP") ? title : `${title} | HWP 뷰어`;
   </body>
 </html>
 
-<style>
+<style is:global>
   /* 레이아웃 기본 구조 */
   body {
     margin: 0;
@@ -118,7 +113,7 @@ const siteTitle = title.includes("HWP") ? title : `${title} | HWP 뷰어`;
     color: #2563eb;
   }
 
-  /* 메인 콘텐츠 메인 박스 (PC: max 860px, 모바일: 화면 가득) */
+  /* 메인 콘텐츠 컨테이너 */
   .main-container {
     flex: 1;
     width: 100%;
@@ -147,16 +142,14 @@ const siteTitle = title.includes("HWP") ? title : `${title} | HWP 뷰어`;
     font-size: 0.85rem;
   }
 
-  /* ==========================================
-     📱 모바일 화면 최적화 (768px 이하)
-     ========================================== */
+  /* 📱 모바일 화면 최적화 (768px 이하) */
   @media (max-width: 768px) {
     .main-container {
       margin: 0 auto;
       border-radius: 0;
       border-left: none;
       border-right: none;
-      padding: 16px 14px; /* 모바일에서 좁지 않게 좌우 여백을 14px로 축소 */
+      padding: 16px 14px;
     }
 
     .header-container {
