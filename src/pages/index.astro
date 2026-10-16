@@ -2,15 +2,42 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
-const allRanks = await getCollection('rank');
-const ranks = allRanks.sort((a, b) => new Date(b.data.pubDate || 0).getTime() - new Date(a.data.pubDate || 0).getTime()).slice(0, 3);
+// 1. rank 컬렉션 안전하게 불러오기
+let ranks = [];
+try {
+  const allRanks = await getCollection('rank');
+  ranks = allRanks
+    .filter(post => post && post.data)
+    .sort((a, b) => {
+      const timeA = a.data.pubDate ? new Date(a.data.pubDate).getTime() : 0;
+      const timeB = b.data.pubDate ? new Date(b.data.pubDate).getTime() : 0;
+      return timeB - timeA;
+    })
+    .slice(0, 3);
+} catch (e) {
+  ranks = [];
+}
 
-const allGuides = await getCollection('guide');
-const guides = allGuides.sort((a, b) => new Date(b.data.pubDate || 0).getTime() - new Date(a.data.pubDate || 0).getTime()).slice(0, 3);
+// 2. guide 컬렉션 안전하게 불러오기
+let guides = [];
+try {
+  const allGuides = await getCollection('guide');
+  guides = allGuides
+    .filter(post => post && post.data)
+    .sort((a, b) => {
+      const timeA = a.data.pubDate ? new Date(a.data.pubDate).getTime() : 0;
+      const timeB = b.data.pubDate ? new Date(b.data.pubDate).getTime() : 0;
+      return timeB - timeA;
+    })
+    .slice(0, 3);
+} catch (e) {
+  guides = [];
+}
 
 const formatDate = (dateStr) => {
   if (!dateStr) return '';
   const date = new Date(dateStr);
+  if (isNaN(date.getTime())) return '';
   return date.toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\. /g, '.').replace(/\.$/, '');
 };
 ---
@@ -110,7 +137,6 @@ const formatDate = (dateStr) => {
     margin: 0;
   }
 
-  /* 세련된 전체보기 버튼 링크 */
   .more-link {
     display: inline-flex;
     align-items: center;
@@ -138,7 +164,6 @@ const formatDate = (dateStr) => {
     transform: translateX(3px);
   }
 
-  /* 목록 이중 테두리 완전 제거 스타일 */
   .clean-list {
     list-style: none;
     padding: 0;
