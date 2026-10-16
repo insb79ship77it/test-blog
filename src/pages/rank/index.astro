@@ -2,9 +2,13 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
-// src/content/rank/ 폴더 안의 마크다운 파일 수집 및 정렬
+// rank 콘텐츠 컬렉션 불러오기
 const allRanks = await getCollection('rank');
-allRanks.sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime());
+
+// 최신순 정렬
+const ranks = allRanks.sort(
+  (a, b) => new Date(b.data.pubDate || 0).getTime() - new Date(a.data.pubDate || 0).getTime()
+);
 
 const formatDate = (dateStr) => {
   if (!dateStr) return '';
@@ -17,93 +21,118 @@ const formatDate = (dateStr) => {
 };
 ---
 
-<BaseLayout title="아이돌 & 검색엔진 인기 순위">
-  <div class="tool-header">
-    <h1>인기 순위 모음</h1>
-    <p>최신 아이돌 브랜드 평판 및 검색엔진 점유율 순위를 확인하세요.</p>
+<BaseLayout 
+  title="인기 순위 TOP 모음" 
+  description="다양한 분야의 인기 순위 정보와 분석 데이터를 확인해 보세요."
+>
+  <div class="page-header">
+    <h1>🏆 인기 순위 TOP</h1>
+    <p>분야별 인기 순위 및 리스트를 확인해 보세요.</p>
   </div>
 
-  <section class="guide-section">
-    <h2>전체 순위 목록 ({allRanks.length})</h2>
-    <ul class="guide-card-list">
-      {allRanks.map(post => (
-        <li class="guide-card-item">
-          <a href={`/rank/${post.slug}/`} class="guide-card-link">
-            <div class="card-meta-top">
-              {post.data.category && (
-                <span class="category-badge">{post.data.category}</span>
-              )}
-              {post.data.pubDate && (
-                <time class="pub-date">{formatDate(post.data.pubDate)}</time>
-              )}
-            </div>
-            
-            <h3 class="card-title">{post.data.title}</h3>
-            
-            {post.data.description && (
-              <p class="card-desc">{post.data.description}</p>
-            )}
-          </a>
-        </li>
-      ))}
-    </ul>
-  </section>
+  <ul class="card-list">
+    {ranks.map(post => (
+      <li class="card-item">
+        <a href={`/rank/${post.slug}/`} class="card-link">
+          <div class="card-meta">
+            {post.data.category && <span class="badge">{post.data.category}</span>}
+            {post.data.pubDate && <time>{formatDate(post.data.pubDate)}</time>}
+          </div>
+          <h2 class="card-title">{post.data.title}</h2>
+          {post.data.description && <p class="card-desc">{post.data.description}</p>}
+        </a>
+      </li>
+    ))}
+  </ul>
 </BaseLayout>
 
 <style>
-  .guide-card-list {
+  .page-header {
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #111827;
+  }
+
+  .page-header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 8px;
+  }
+
+  .page-header p {
+    color: #6b7280;
+    font-size: 0.95rem;
+    margin: 0;
+  }
+
+  .card-list {
     list-style: none;
+    padding: 0;
+    margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    padding: 0;
-    margin-top: 20px;
+    gap: 8px;
   }
-  .guide-card-item {
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    transition: all 0.2s ease;
+
+  /* 이중 테두리 제거: 박스 테두리 대신 가벼운 하단 구분선 적용 */
+  .card-item {
+    border: none;
+    border-bottom: 1px solid #f3f4f6;
+    background-color: transparent;
+    transition: background-color 0.15s ease;
   }
-  .guide-card-item:hover {
-    border-color: #2563eb;
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
-    transform: translateY(-2px);
+
+  .card-item:last-child {
+    border-bottom: none;
   }
-  .guide-card-link {
+
+  .card-item:hover {
+    background-color: #f8fafc;
+    border-radius: 8px;
+  }
+
+  .card-link {
     display: block;
-    padding: 20px;
+    padding: 16px 8px;
     text-decoration: none;
     color: inherit;
   }
-  .card-meta-top {
+
+  .card-meta {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    margin-bottom: 10px;
+    align-items: center;
+    margin-bottom: 8px;
   }
-  .category-badge {
+
+  .badge {
     background-color: #eff6ff;
     color: #2563eb;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     font-weight: 600;
-    padding: 4px 10px;
-    border-radius: 20px;
+    padding: 3px 10px;
+    border-radius: 12px;
     border: 1px solid #bfdbfe;
   }
-  .pub-date {
+
+  .card-meta time {
     font-size: 0.85rem;
     color: #9ca3af;
   }
+
   .card-title {
     font-size: 1.15rem;
     font-weight: 700;
-    color: #111827;
+    color: #1f2937;
     margin-bottom: 6px;
+    line-height: 1.4;
   }
+
   .card-desc {
-    font-size: 0.92rem;
+    font-size: 0.9rem;
     color: #4b5563;
     margin: 0;
+    line-height: 1.5;
   }
 </style>
