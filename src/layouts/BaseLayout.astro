@@ -18,22 +18,18 @@ const siteTitle = title.includes("HWP") ? title : `${title} | HWP 뷰어`;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <!-- SEO 기본 메타 태그 -->
     <title>{siteTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={Astro.url.href} />
 
-    <!-- Open Graph (카카오톡, 검색엔진 수집용) -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={Astro.url.href} />
     <meta property="og:title" content={siteTitle} />
     <meta property="og:description" content={description} />
 
-    <!-- 전역 폰트 설정 -->
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   </head>
   <body>
-    <!-- 상단 네비게이션 헤더 -->
     <header class="site-header">
       <div class="header-container">
         <a href="/" class="site-logo">📄 HWP 뷰어</a>
@@ -44,12 +40,10 @@ const siteTitle = title.includes("HWP") ? title : `${title} | HWP 뷰어`;
       </div>
     </header>
 
-    <!-- 메인 본문 영역 (모바일 반응형 최적화) -->
     <main class="main-container">
       <slot />
     </main>
 
-    <!-- 하단 푸터 -->
     <footer class="site-footer">
       <div class="footer-container">
         <p>&copy; {new Date().getFullYear()} HWP Viewer. All rights reserved.</p>
@@ -59,38 +53,40 @@ const siteTitle = title.includes("HWP") ? title : `${title} | HWP 뷰어`;
 </html>
 
 <style is:global>
-  /* 레이아웃 기본 구조 */
+  * {
+    box-sizing: border-box;
+  }
+
   body {
     margin: 0;
     padding: 0;
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
-    background-color: #f9fafb;
-    color: #111827;
+    background-color: #f8fafc;
+    color: #0f172a;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
   }
 
-  /* 상단 헤더 */
   .site-header {
     background-color: #ffffff;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e2e8f0;
     position: sticky;
     top: 0;
     z-index: 50;
   }
 
   .header-container {
-    max-width: 900px;
+    max-width: 1024px; /* 메인 영역 폭을 1024px로 확장 */
     margin: 0 auto;
-    padding: 14px 20px;
+    padding: 16px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
   .site-logo {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     font-weight: 800;
     color: #2563eb;
     text-decoration: none;
@@ -98,13 +94,13 @@ const siteTitle = title.includes("HWP") ? title : `${title} | HWP 뷰어`;
 
   .site-nav {
     display: flex;
-    gap: 16px;
+    gap: 20px;
   }
 
   .site-nav a {
     text-decoration: none;
-    color: #4b5563;
-    font-size: 0.95rem;
+    color: #475569;
+    font-size: 0.98rem;
     font-weight: 600;
     transition: color 0.15s ease;
   }
@@ -113,32 +109,30 @@ const siteTitle = title.includes("HWP") ? title : `${title} | HWP 뷰어`;
     color: #2563eb;
   }
 
-  /* 메인 콘텐츠 컨테이너 */
+  /* 메인 콘텐츠 영역 (PC 최대 1024px, 모바일 패딩 축소) */
   .main-container {
     flex: 1;
     width: 100%;
-    max-width: 860px;
+    max-width: 1024px;
     margin: 24px auto;
-    padding: 24px;
+    padding: 28px 32px;
     background-color: #ffffff;
     border-radius: 12px;
-    border: 1px solid #e5e7eb;
-    box-sizing: border-box;
+    border: 1px solid #e2e8f0;
   }
 
-  /* 하단 푸터 */
   .site-footer {
     background-color: #ffffff;
-    border-top: 1px solid #e5e7eb;
+    border-top: 1px solid #e2e8f0;
     margin-top: auto;
   }
 
   .footer-container {
-    max-width: 900px;
+    max-width: 1024px;
     margin: 0 auto;
     padding: 20px;
     text-align: center;
-    color: #9ca3af;
+    color: #94a3b8;
     font-size: 0.85rem;
   }
 
@@ -149,7 +143,7 @@ const siteTitle = title.includes("HWP") ? title : `${title} | HWP 뷰어`;
       border-radius: 0;
       border-left: none;
       border-right: none;
-      padding: 16px 14px;
+      padding: 18px 12px; /* 모바일에서 화면 넓이 100% 활용 */
     }
 
     .header-container {
@@ -157,11 +151,7 @@ const siteTitle = title.includes("HWP") ? title : `${title} | HWP 뷰어`;
     }
 
     .site-logo {
-      font-size: 1.1rem;
-    }
-
-    .site-nav a {
-      font-size: 0.9rem;
+      font-size: 1.15rem;
     }
   }
 </style>
