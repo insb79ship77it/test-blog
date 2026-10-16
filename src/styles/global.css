@@ -342,3 +342,40 @@ main details p {
   font-size: 0.93rem;
   line-height: 1.6;
 }
+
+/* ==========================================
+   모바일 화면(768px 이하) 패딩 & 여백 최적화
+   ========================================== */
+@media (max-width: 768px) {
+  /* 메인 컨테이너 좌우 여백 축소 (기존 20~24px -> 12~14px) */
+  main,
+  .container,
+  article {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* 카드 및 박스 요소 내부 여백도 모바일에 맞게 조정 */
+  .card-item,
+  .card-link,
+  main details,
+  .article-header {
+    padding: 14px 14px !important;
+  }
+
+  /* 본문 글자 크기 및 줄간격 모바일 최적화 */
+  body, article {
+    font-size: 0.98rem;
+    line-height: 1.65;
+  }
+
+  /* 표(Table)가 화면 밖으로 터지지 않고 스크롤되도록 설정 */
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+}
